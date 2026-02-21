@@ -1,32 +1,64 @@
 #!/bin/bash
-# Simple backup script with timestamp
+# q4_backup.sh
+# Automated Backup Script with Timestamp
 
 echo "----------------------"
-echo "BACKUP SCRIPT"
+echo "     BACKUP SCRIPT"
 echo "----------------------"
 
-# Ask user for source directory
+# Ask for source directory
 read -p "Enter directory to backup: " src
 
-# Check if source directory exists
-if [ ! -d "$src" ]
-then
-    echo "Source directory not found"
+# Check if source exists
+if [ ! -d "$src" ]; then
+    echo "Source directory not found."
     exit 1
 fi
 
-# Create backup directory if it does not exist
-backup_dir="backup"
-mkdir -p "$backup_dir"
+# Ask for destination directory
+read -p "Enter destination directory: " dest
 
-# Get current date and time
-time=$(date +"%Y%m%d_%H%M%S")
+# Create destination directory if needed
+mkdir -p "$dest"
 
-# Backup file name with timestamp
-backup_file="$backup_dir/backup_$time.tar"
+# Ask backup type
+echo "Choose backup type:"
+echo "1. Simple Copy"
+echo "2. Compressed Archive (tar.gz)"
+read -p "Enter choice (1 or 2): " choice
 
-# Create backup using tar
-tar -cf "$backup_file" "$src"
+# Generate timestamp
+timestamp=$(date +"%Y%m%d_%H%M%S")
 
-echo "Backup created successfully"
-echo "Backup file: $backup_file"
+# Record start time
+start_time=$(date +%s)
+
+if [ "$choice" -eq 1 ]; then
+    backup_path="$dest/backup_$timestamp"
+    cp -r "$src" "$backup_path"
+elif [ "$choice" -eq 2 ]; then
+    backup_path="$dest/backup_$timestamp.tar.gz"
+    tar -czf "$backup_path" "$src"
+else
+    echo "Invalid choice."
+    exit 1
+fi
+
+# Record end time
+end_time=$(date +%s)
+
+# Check if backup was successful
+if [ $? -eq 0 ]; then
+    echo "Backup created successfully."
+    echo "Backup location: $backup_path"
+
+    # Display backup size
+    echo "Backup size:"
+    du -h "$backup_path"
+
+    # Calculate duration
+    duration=$((end_time - start_time))
+    echo "Backup completed in $duration seconds."
+else
+    echo "Backup failed."
+fi

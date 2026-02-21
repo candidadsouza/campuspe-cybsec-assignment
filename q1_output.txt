@@ -1,0 +1,12 @@
+==============================
+       SYSTEM INFORMATION
+==============================
+Username            : kali
+Hostname            : kali
+Date & Time         : Sat Feb 21 05:35:07 AM EST 2026
+Operating System    : Linux
+Current Directory   : /home/kali/Desktop/assignment
+Home Directory      : /home/kali
+Logged-in Users     : 1
+System Uptime       :  05:35:07 up 19 min,  1 user,  load average: 0.65, 0.44, 0.32
+

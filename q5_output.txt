@@ -1,0 +1,6 @@
+-----------------------------------
+         USER ACCOUNT REPORT
+-----------------------------------
+Report saved as user_report.txt
+-----------------------------------
+User report completed

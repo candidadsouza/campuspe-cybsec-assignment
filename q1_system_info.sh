@@ -1,55 +1,51 @@
 #!/bin/bash
-# -----------------------------------------
-# Script Name : q1_system_info.sh
-# Description : Displays basic system information
-# -----------------------------------------
+# --------------------------------------------------
+# Script Name: q1_system_info.sh
+# Description : Displays essential system information
+# Author      : Your Name
+# --------------------------------------------------
 
-# Print main heading
-echo "SYSTEM INFORMATION"
-echo "==================="
+# Print formatted heading
+echo "=============================="
+echo "       SYSTEM INFORMATION"
+echo "=============================="
 
-# Display the system (host) name
-echo "System Name:"
-uname -n
+# Store required system information into variables
+
+# Get current logged-in username
+USERNAME=$(whoami)
+
+# Get system hostname
+HOSTNAME=$(hostname)
+
+# Get current date and time
+CURRENT_DATE=$(date)
+
+# Get operating system name (Linux, Darwin, etc.)
+OS_NAME=$(uname -s)
+
+# Get present working directory
+CURRENT_DIR=$(pwd)
+
+# Get user's home directory
+HOME_DIR=$HOME
+
+# Count number of currently logged-in users
+LOGGED_USERS_COUNT=$(who | wc -l)
+
+# Get system uptime information
+SYSTEM_UPTIME=$(uptime)
+
+# Display collected information in formatted output
+echo "Username            : $USERNAME"
+echo "Hostname            : $HOSTNAME"
+echo "Date & Time         : $CURRENT_DATE"
+echo "Operating System    : $OS_NAME"
+echo "Current Directory   : $CURRENT_DIR"
+echo "Home Directory      : $HOME_DIR"
+echo "Logged-in Users     : $LOGGED_USERS_COUNT"
+echo "System Uptime       : $SYSTEM_UPTIME"
+
 echo ""
 
-# Display detailed system information such as OS and kernel version
-echo "Detailed System Information:"
-uname -a
-echo ""
-
-# Display how long the system has been running
-echo "System Uptime:"
-uptime
-echo ""
-
-# Display memory usage including RAM and swap
-echo "Memory Usage:"
-free
-echo ""
-
-# Display disk space usage of file systems
-echo "Disk Usage:"
-df
-echo ""
-
-# Display the current logged-in user
-echo "Current Logged-in User:"
-whoami
-echo ""
-
-# Display current date and time
-echo "Current Date and Time:"
-date
-echo ""
-
-# Display list of all users currently logged into the system
-echo "Logged-in Users:"
-who
-echo ""
-
-# Display the present working directory
-echo "Current Working Directory:"
-pwd
-echo ""
 

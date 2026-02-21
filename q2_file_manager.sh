@@ -1,80 +1,91 @@
 #!/bin/bash
-# Simple file and directory manager script
+# --------------------------------------------------
+# Script Name: q2_file_manager.sh
+# Description : Menu-driven File & Directory Manager
+# --------------------------------------------------
 
-# Loop runs until user chooses to exit
 while true
 do
-
-# Display menu
-    echo "--------------------"
-    echo "1. Create file"
+    echo "----------------------------------"
+    echo "        FILE MANAGER MENU"
+    echo "----------------------------------"
+    echo "1. List files"
     echo "2. Create directory"
-    echo "3. Delete file"
-    echo "4. Delete directory"
-    echo "5. List files"
-    echo "6. Open file"
-    echo "7. Exit"
-    echo "--------------------"
+    echo "3. Create file"
+    echo "4. Delete file"
+    echo "5. Rename file"
+    echo "6. Search files"
+    echo "7. Count files and directories"
+    echo "8. Exit"
+    echo "----------------------------------"
 
-# Read user choice
-    read -p "Enter choice: " ch
+    read -p "Enter your choice: " choice
 
-    # Create file and write content
-    if [ "$ch" -eq 1 ]
-    then
-        echo "Create file selected"
-        read -p "Enter file name: " f
-        read -p "Enter text to write in file: " text
-        echo "$text" > "$f"
-        echo "File created with content"
+    case $choice in
 
-    # Create directory
-    elif [ "$ch" -eq 2 ]
-    then
-        echo "Create directory selected"
-        read -p "Enter directory name: " d
-        mkdir "$d"
-        echo "Directory created"
+        1)
+            echo "Files in current directory:"
+            ls
+            ;;
 
-    # Delete file
-    elif [ "$ch" -eq 3 ]
-    then
-        echo "Delete file selected"
-        read -p "Enter file name: " f
-        rm "$f"
-        echo "File deleted"
+        2)
+            read -p "Enter directory name: " dirname
+            if [ -d "$dirname" ]; then
+                echo "Directory already exists."
+            else
+                mkdir "$dirname" && echo "Directory created successfully."
+            fi
+            ;;
 
-    # Delete directory
-    elif [ "$ch" -eq 4 ]
-    then
-        echo "Delete directory selected"
-        read -p "Enter directory name: " d
-        rmdir "$d"
-        echo "Directory deleted"
+        3)
+            read -p "Enter file name: " filename
+            if [ -f "$filename" ]; then
+                echo "File already exists."
+            else
+                touch "$filename" && echo "File created successfully."
+            fi
+            ;;
 
-    # List files
-    elif [ "$ch" -eq 5 ]
-    then
-        echo "Files in current folder:"
-        ls
+        4)
+            read -p "Enter file name to delete: " filename
+            if [ -f "$filename" ]; then
+                rm "$filename" && echo "File deleted successfully."
+            else
+                echo "File does not exist."
+            fi
+            ;;
 
-    # Open and display file content
-    elif [ "$ch" -eq 6 ]
-    then
-        echo "Open file selected"
-        read -p "Enter file name: " f
-        echo "File content:"
-        cat "$f"
+        5)
+            read -p "Enter current file name: " oldname
+            read -p "Enter new file name: " newname
+            if [ -f "$oldname" ]; then
+                mv "$oldname" "$newname" && echo "File renamed successfully."
+            else
+                echo "File does not exist."
+            fi
+            ;;
 
-    # Exit
-    elif [ "$ch" -eq 7 ]
-    then
-        echo "Exiting program"
-        break
+        6)
+            read -p "Enter file name to search: " searchname
+            find . -name "$searchname"
+            ;;
 
-    else
-        echo "Wrong choice"
-    fi
+        7)
+            echo "Total files:"
+            find . -type f | wc -l
+            echo "Total directories:"
+            find . -type d | wc -l
+            ;;
+
+        8)
+            echo "Exiting program..."
+            break
+            ;;
+
+        *)
+            echo "Invalid choice. Please try again."
+            ;;
+    esac
 
     echo ""
 done

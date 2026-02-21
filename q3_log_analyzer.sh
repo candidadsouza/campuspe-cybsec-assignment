@@ -1,55 +1,50 @@
 #!/bin/bash
-# Log analysis script using basic commands
+# q3_log_analyzer.sh
+# Simple Web Server Log Analyzer
 
-echo "----------------------"
-echo "LOG ANALYSIS"
-echo "----------------------"
+echo "-----------------------------------"
+echo "         LOG FILE ANALYZER"
+echo "-----------------------------------"
 
-# Step 1: Ask for log file name
+# Ask user for log file name
 read -p "Enter log file name: " logfile
 
-# Step 2: Display log file contents
-echo "Displaying log file:"
-cat "$logfile"
+# Check if file exists
+if [ ! -f "$logfile" ]; then
+    echo "Error: File does not exist."
+    exit 1
+fi
 
-# Step 3: Search for WARNING messages
-echo "WARNING messages:"
-grep "WARNING" "$logfile"
+echo ""
 
-# Step 4: Search for failed login attempts
-echo "Failed login attempts:"
-grep "failed login" "$logfile"
+# Total number of log entries
+echo "Total Log Entries:"
+wc -l < "$logfile"
 
-# Step 5: Count failed entries
-failed_count=$(grep -c "failed" "$logfile")
-echo "Number of failed entries: $failed_count"
+echo ""
 
-# Step 6: Extract IP addresses from logs
-echo "IP addresses found:"
-grep -oE '([0-9]{1,3}\.){3}[0-9]{1,3}' "$logfile"
+# Number of unique IP addresses (column 1)
+echo "Unique IP Addresses:"
+awk '{print $1}' "$logfile" | sort | uniq | wc -l
 
-# Step 7: Create incident report
-echo "Creating incident report..."
+echo ""
 
-echo "Incident Report" > incident_report.txt
-echo "----------------" >> incident_report.txt
-echo "Warnings found:" >> incident_report.txt
-grep "WARNING" "$logfile" >> incident_report.txt
-echo "" >> incident_report.txt
+# Count HTTP status codes (column 7)
+echo "Status Code Counts:"
+awk '{print $7}' "$logfile" | sort | uniq -c
 
-echo "Failed login attempts:" >> incident_report.txt
-grep "failed login" "$logfile" >> incident_report.txt
-echo "" >> incident_report.txt
+echo ""
 
-echo "Number of failed entries: $failed_count" >> incident_report.txt
-echo "" >> incident_report.txt
+# Most frequently requested page (column 6)
+echo "Most Frequently Requested Page:"
+awk '{print $6}' "$logfile" | sed 's/"//g' | sort | uniq -c | sort -nr | head -1
 
-echo "IP addresses detected:" >> incident_report.txt
-grep -oE '([0-9]{1,3}\.){3}[0-9]{1,3}' "$logfile" >> incident_report.txt
+echo ""
 
-# Step 8: Display incident report
-echo "Incident report contents:"
-cat incident_report.txt
+# Top 3 IP addresses by request count
+echo "Top 3 IP Addresses:"
+awk '{print $1}' "$logfile" | sort | uniq -c | sort -nr | head -3
 
-echo "----------------------"
-echo "Log analysis completed"
+echo ""
+echo "-----------------------------------"
+echo "Log Analysis Completed"

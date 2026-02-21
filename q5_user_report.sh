@@ -1,32 +1,70 @@
 #!/bin/bash
-# Simple user account report (beginner friendly)
+# q5_user_report.sh
+# User Account Reporting Script
 
-echo "USER ACCOUNT REPORT"
-echo "------------------"
+echo "-----------------------------------"
+echo "         USER ACCOUNT REPORT"
+echo "-----------------------------------"
 
-# 1. Show currently logged-in users
-echo "Currently logged-in users:"
-who
-echo ""
-
-# 2. List all local users from /etc/passwd
-echo "All local users:"
-cat /etc/passwd
-echo ""
-
-# 3. List only real users (those with home directories under /home)
-echo "Real users (with /home directories):"
-cat /etc/passwd | grep '/home' | cut -d: -f1
-echo ""
-
-
-
-# Save report to a file
 report="user_report.txt"
+
 {
-  echo "Currently logged-in users:"; who; echo ""
-  echo "All local users:"; cat /etc/passwd; echo ""
-  echo "Real users:"; cat /etc/passwd | grep '/home' | cut -d: -f1; echo ""
-} > $report
+echo "1. USER STATISTICS"
+echo "-------------------"
+
+# Total users
+total_users=$(wc -l < /etc/passwd)
+echo "Total Users: $total_users"
+
+# System users (UID < 1000)
+system_users=$(awk -F: '$3 < 1000 {print $1}' /etc/passwd | wc -l)
+echo "System Users (UID < 1000): $system_users"
+
+# Regular users (UID >= 1000)
+regular_users=$(awk -F: '$3 >= 1000 {print $1}' /etc/passwd | wc -l)
+echo "Regular Users (UID >= 1000): $regular_users"
+
+# Logged-in users
+echo ""
+echo "Currently Logged-in Users:"
+who
+
+echo ""
+echo "2. USER DETAILS"
+echo "-------------------"
+
+# Username, UID, Home, Shell
+awk -F: '{print "Username:", $1, "| UID:", $3, "| Home:", $6, "| Shell:", $7}' /etc/passwd
+
+echo ""
+echo "3. GROUP INFORMATION"
+echo "-------------------"
+
+# List all groups
+echo "All Groups:"
+cut -d: -f1 /etc/group
+
+echo ""
+echo "Group Member Counts:"
+awk -F: '{print $1, "->", split($4,a,","), "members"}' /etc/group
+
+echo ""
+echo "4. SECURITY CHECK"
+echo "-------------------"
+
+# Users with UID 0
+echo "Users with UID 0:"
+awk -F: '$3 == 0 {print $1}' /etc/passwd
+
+# Users without passwords (empty password field)
+echo ""
+echo "Users without password (check /etc/shadow may require root):"
+awk -F: '$2 == "" {print $1}' /etc/passwd
+
+echo ""
+
+} > "$report"
 
 echo "Report saved as $report"
+echo "-----------------------------------"
+echo "User report completed"
