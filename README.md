@@ -1,1 +1,1 @@
-# campuspe-cybsec-assignmnet
+# campuspe-cybsec-assignment
