@@ -1,0 +1,8 @@
+Target,127.0.0.1
+
+Port,State,Service
+135,open,msrpc           Microsoft Windows RPC
+445,open,microsoft-ds?
+902,open,"ssl/vmware-auth VMware Authentication Daemon 1.10 (Uses VNC, SOAP)"
+912,open,"vmware-auth     VMware Authentication Daemon 1.0 (Uses VNC, SOAP)"
+3306,open,mysql           MySQL 8.0.44

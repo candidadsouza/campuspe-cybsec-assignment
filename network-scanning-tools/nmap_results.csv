@@ -1,0 +1,10 @@
+Target,127.0.0.1
+
+Scan Time,0.21 seconds
+
+Port,State,Service
+135,open,msrpc
+445,open,microsoft-ds
+902,open,iss-realsecure
+912,open,apex-mesh
+3306,open,mysql

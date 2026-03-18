@@ -3,13 +3,15 @@
 ## Project Description
 
 This project automates basic network scanning tools using Python.
-It includes three tools:
+It includes four tools:
 
 * Ping Scanner
 * ARP Scanner
 * Nmap Scanner
+* Unified Network Scanner (Bonus)
 
 These tools help in performing network reconnaissance and understanding network behavior using Python.
+
 
 
 ## Requirements
@@ -65,19 +67,36 @@ Select scan type: 2
 
 
 
+### 4. Unified Network Scanner (Bonus)
+
+Run:
+python network_scanner.py
+
+This tool combines:
+
+* Ping Scanner
+* ARP Scanner
+* Nmap Scanner
+
+All functionalities are accessible through a single menu-driven interface.
+
+
+
 ## Features
 
 * Cross-platform support (Windows, Linux, Mac)
 * Multiple scan options (Nmap)
 * Output parsing using regular expressions
 * Save results to file
+* Export results to CSV format (Bonus)
+* Unified scanner combining all tools (Bonus)
 * Error handling
 
 
 
 ## Screenshots
 
-Screenshots are available in the screenshots folder:
+Screenshots are available in the `screenshots` folder:
 
 * ping_output.png
 * arp_output.png
@@ -88,15 +107,15 @@ Screenshots are available in the screenshots folder:
 ## Project Structure
 
 network-scanning-tools
-│
-├── ping_scanner.py
-├── arp_scanner.py
-├── nmap_scanner.py
-├── README.md
-└── screenshots 
-      ├── ping_output.png
-      ├── arp_output.png
-      └── nmap_output.png
+ping_scanner.py
+arp_scanner.py
+nmap_scanner.py
+network_scanner.py
+README.md
+screenshots
+  ping_output.png
+  arp_output.png
+  nmap_output.png
 
 
 
@@ -105,6 +124,7 @@ network-scanning-tools
 * Only scan networks you own or have permission to scan
 * Unauthorized network scanning is illegal
 * Use these tools only for educational purposes
+
 
 
 ## Author
