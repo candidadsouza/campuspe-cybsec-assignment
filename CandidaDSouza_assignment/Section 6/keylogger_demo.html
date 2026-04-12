@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Keylogger Demo</title>
+</head>
+<body>
+
+    <h2>Password Input Demo</h2>
+
+    <!-- password field -->
+    <input type="password" id="passwordBox" onkeyup="logKeys()">
+
+    <h3>Logged Keys:</h3>
+    <p id="output"></p>
+
+    <script>
+        let typedKeys = "";
+
+        function logKeys() {
+            let input = document.getElementById("passwordBox").value;
+
+            typedKeys = input;
+
+            document.getElementById("output").innerHTML = typedKeys;
+        }
+    </script>
+
+</body>
+</html>
